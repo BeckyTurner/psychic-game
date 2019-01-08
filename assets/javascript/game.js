@@ -8,20 +8,19 @@ var guessesLeft = 9;
 var wins = 0;
 var losses = 0;
 
+
+var updateGuessesSoFar = function() {
+    document.getElementById("guesses-so-far").innerHTML = "Guesses so far: " + guessedLetters;
+};
+
 var updateGuessesLeft = function() {
-    guessesLeft--;
-    document.querySelector("#guesses-left").innerHTML = "Guesses left: " + guessesLeft;
+    document.getElementById("guesses-left").innerHTML = "Guesses left: " + guessesLeft;
 };
 var updateLetterToGuess = function() {
     letterToGuess = letters[Math.floor(Math.random() * letters.length)];
     console.log(letterToGuess);
 
 };
-
-var updateGuessesSoFar = function() {
-    document.querySelector("#guesses-so-far").innerHTML = "Guesses so far: " + guessedLetters;
-};
-
 
 var reset = function() {
     guessesLeft = 9;
@@ -31,9 +30,12 @@ var reset = function() {
     updateGuessesSoFar();
 };
 
+reset();
+
 document.onkeyup= function(event) {
     var userGuess = event.key;
     guessedLetters.push(event.key);
+    guessesLeft--;
     updateGuessesLeft();
     updateGuessesSoFar();
     console.log(event);
@@ -42,6 +44,15 @@ document.onkeyup= function(event) {
         alert("You win!");
         wins++;
         reset();
+        document.getElementById("wins").innerHTML = "Wins: " + wins;
+        console.log(wins);
+    } else if (guessesLeft === 0) {
+        alert("You lose!");
+        losses++;
+        reset();
+        document.getElementById("losses").innerHTML = "Losses: " + losses;
+        console.log(losses);
     }
+
 };
 
